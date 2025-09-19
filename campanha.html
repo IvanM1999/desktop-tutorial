@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Campanha de Brinquedos — Doe & Espalhe Sorrisos</title>
+  <meta name="description" content="Campanha de doação de brinquedos — De 16 a 26 de setembro. Doe brinquedos, retire ou solicite coleta, e compartilhe alegria. Contato via WhatsApp e e-mail."/>
+  <meta name="theme-color" content="#00BFA6" />
+  <!-- JSON-LD (schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Event",
+    "name":"Campanha de Doação de Brinquedos",
+    "startDate":"2025-09-16",
+    "endDate":"2025-09-26",
+    "location":{
+      "@type":"Place",
+      "name":"Ponto de Coleta Local",
+      "address":"Consultar organizador via WhatsApp"
+    },
+    "description":"Campanha de doação em prol do Dia das Crianças — Doe brinquedos e ajude a espalhar sorrisos."
+  }
+  </script>
+
+  <style>
+    :root{
+      --accent:#FFD700;
+      --accent-2:#00BFA6;
+      --bg-overlay: rgba(0,0,0,0.45);
+      --glass: rgba(255,255,255,0.06);
+      --max-w:1100px;
+      --radius:14px;
+      --font-sans: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    /* Reset simples */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font-sans);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      color:#06202a;
+      background:linear-gradient(180deg, #b2f7ef 0%, #9ef0e6 40%, #7ee5d6 100%);
+      min-height:100vh;
+      line-height:1.4;
+    }
+
+    /* HERO com imagem de base; sobreposição com blur */
+    .hero{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:36px 20px 48px;
+      overflow:hidden;
+    }
+    .hero__bg{
+      position:absolute;
+      inset:0;
+      background-image: url('/assets/campanha.jpg');
+      background-position:center;
+      background-size:cover;
+      filter: blur(6px) saturate(1.05) contrast(1.02);
+      transform: scale(1.03);
+      opacity:0.9;
+      z-index:0;
+    }
+    .hero__overlay{
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(255,255,255,0.06) 50%);
+      z-index:1;
+    }
+
+    .container{
+      position:relative;
+      z-index:2;
+      width:100%;
+      max-width:var(--max-w);
+      margin:0 auto;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:10;
+      width:100%;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+      border-bottom:1px solid rgba(0,0,0,0.06);
+      padding:12px 18px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      justify-content:space-between;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo{
+      width:52px;
+      height:52px;
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow:0 6px 18px rgba(0,0,0,0.14);
+      flex-shrink:0;
+    }
+    .logo img{width:100%;height:100%;object-fit:cover}
+    .brand h1{font-size:18px;margin:0;color:#0b3b3a}
+    nav a{margin-left:12px;text-decoration:none;color:#0b3b3a;font-weight:600}
+    .nav-actions{display:flex;gap:10px;align-items:center}
+
+    /* card hero central */
+    .hero-card{
+      margin-top:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+      border-radius:var(--radius);
+      padding:26px;
+      box-shadow: 0 12px 40px rgba(6,32,42,0.12);
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:22px;
+      align-items:center;
+    }
+    @media (max-width:920px){
+      .hero-card{grid-template-columns:1fr;padding:18px}
+      .logo{width:48px;height:48px}
+    }
+
+    .hero-card h2{
+      margin:0 0 8px 0;
+      font-size:28px;
+      color:#0b3b3a;
+      letter-spacing:0.2px;
+    }
+    .hero-card p.lead{margin:0 0 18px 0;color:#276767}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border-radius:12px;
+      padding:10px 16px;
+      font-weight:700;
+      cursor:pointer;
+      border:none;
+      text-decoration:none;
+      transition:transform .14s ease, box-shadow .14s ease;
+      box-shadow: 0 6px 20px rgba(11,59,58,0.08);
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#FFA500); color:#042a2a}
+    .btn-ghost{background:transparent;border:1px solid rgba(11,59,58,0.08); color:#042a2a}
+
+    /* Right column: form/card */
+    .donation-card{
+      background: linear-gradient(180deg,#fff,#f6fffe);
+      border-radius:12px;
+      padding:14px;
+      box-shadow: 0 8px 24px rgba(3,26,24,0.06);
+    }
+    .donation-card small{display:block;color:#00695c;margin-bottom:8px}
+    .form-row{display:grid;grid-template-columns:1fr 110px;gap:8px}
+    label{font-size:13px;color:#064a48}
+    input[type="text"], input[type="email"], select, textarea{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid rgba(3,26,24,0.06);
+      background:transparent;
+      font-size:14px;
+      outline:none;
+    }
+    textarea{min-height:80px;resize:vertical}
+    .inline{display:flex;gap:8px;align-items:center}
+    .muted{color:#2d7c76;font-size:13px}
+    .progress{
+      height:12px;
+      background:linear-gradient(90deg,#e6fff9,#f3fff6);
+      border-radius:999px;
+      overflow:hidden;
+      margin:12px 0;
+      border:1px solid rgba(3,26,24,0.03);
+    }
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,#00c4a7,#00bfa6); width:0%}
+
+    /* Sections */
+    main{padding:28px 18px 120px}
+    .section{
+      max-width:var(--max-w);
+      margin:28px auto;
+      padding:18px;
+      background:rgba(255,255,255,0.9);
+      border-radius:12px;
+      box-shadow:0 8px 28px rgba(3,26,24,0.04);
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+    @media (max-width:920px){ .grid-3{grid-template-columns:1fr} }
+
+    .feature{
+      padding:16px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfffe)
+    }
+    .feature h4{margin:0 0 8px 0}
+    .small-muted{font-size:13px;color:#2f7a73}
+
+    /* Gallery */
+    .gallery{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+    }
+    @media (max-width:920px){ .gallery{grid-template-columns:repeat(2,1fr)} }
+    .gallery img{width:100%;height:160px;object-fit:cover;border-radius:8px;display:block}
+
+    /* Floating WhatsApp Button */
+    .whatsapp-fab{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:9999;
+      display:inline-grid;
+      place-items:center;
+      width:64px;height:64px;border-radius:999px;
+      background:linear-gradient(180deg,#25D366,#128C7E);
+      box-shadow:0 14px 34px rgba(18,140,126,0.26);
+      cursor:pointer;
+    }
+    .whatsapp-fab svg{width:30px;height:30px;fill:#fff}
+
+    /* Footer */
+    footer{padding:18px;text-align:center;color:#044f4c;font-size:14px}
+
+    /* Small helpers */
+    .muted-2{color:#376f6a}
+    .pill{display:inline-block;padding:6px 10px;background:#fff;border-radius:999px;font-weight:700}
+
+    /* fade-in on scroll */
+    .reveal{opacity:0;transform:translateY(14px);transition:all .7s cubic-bezier(.2,.9,.25,1)}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* tiny animations */
+    .pulse{animation:pulse 2.4s infinite}
+    @keyframes pulse{
+      0%{transform:scale(1);box-shadow:0 6px 20px rgba(0,0,0,0.06)}
+      50%{transform:scale(1.02)}
+      100%{transform:scale(1);box-shadow:0 6px 20px rgba(0,0,0,0.06)}
+    }
+
+    /* Accordion FAQ */
+    .faq-item{border-top:1px dashed rgba(0,0,0,0.04)}
+    .faq-question{display:flex;align-items:center;justify-content:space-between;padding:12px;cursor:pointer}
+    .faq-answer{padding:0 12px 12px 12px;display:none;color:#244d47}
+    .faq-item.open .faq-answer{display:block}
+
+    /* Focus styles for accessibility */
+    a:focus,button:focus,input:focus,select:focus,textarea:focus{
+      outline:3px solid rgba(0,191,166,0.18);
+      outline-offset:2px;
+    }
+  </style>
+</head>
+<body>
+
+  <header role="banner" aria-label="Cabeçalho da campanha">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <img src="/assets/campanha.jpg" alt="Campanha de Brinquedos (logo)" />
+      </div>
+      <div>
+        <h1>Campanha de Brinquedos</h1>
+        <div class="muted-2" style="font-size:13px">16 a 26 de setembro • Dia das Crianças Solidário</div>
+      </div>
+    </div>
+
+    <div class="nav-actions" role="navigation" aria-label="Ações principais">
+      <a class="btn btn-ghost" href="#como-doar">Como doar</a>
+      <a class="btn btn-ghost" href="#pontos">Pontos de Coleta</a>
+      <a class="btn btn-primary" href="#contato">Quero Ajudar</a>
+    </div>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <div class="container">
+      <div class="hero-card reveal" id="hero-card">
+        <div>
+          <h2 id="hero-title">Doe brinquedos — Espalhe sorrisos</h2>
+          <p class="lead">Participe do Dia das Crianças Solidário. Doe brinquedos novos ou em bom estado — escolha entrega, ponto de coleta ou solicite retirada.</p>
+
+          <div class="cta-row" role="group" aria-label="Ações principais">
+            <button class="btn btn-primary" id="btn-donar" aria-controls="contato">Quero ajudar</button>
+            <a class="btn btn-ghost" href="#pontos">Ver pontos de coleta</a>
+            <button class="btn btn-ghost" id="btn-compartilhar">Compartilhar</button>
+          </div>
+
+          <div style="margin-top:12px">
+            <small class="muted">Meta: <strong id="meta">500</strong> brinquedos • Recebidos: <strong id="received">0</strong></small>
+            <div class="progress" aria-hidden="true" title="Progresso de doações">
+              <i id="progressBar"></i>
+            </div>
+            <div aria-live="polite" id="progressText" class="muted" style="font-size:13px"></div>
+          </div>
+        </div>
+
+        <aside class="donation-card" aria-label="Formulário rápido de doação">
+          <small>Formulário rápido — envio por WhatsApp</small>
+          <form id="quickForm" onsubmit="return false;">
+            <label for="qname">Nome</label>
+            <input id="qname" type="text" placeholder="Seu nome" required />
+
+            <label for="qemail">E-mail (opcional)</label>
+            <input id="qemail" type="email" placeholder="seu@email.com" />
+
+            <div style="margin-top:8px">
+              <label for="qtype">Tipo de Doação</label>
+              <select id="qtype" aria-label="Tipo de doação">
+                <option value="Brinquedo">Brinquedo</option>
+                <option value="Roupas">Roupas</option>
+                <option value="Dinheiro">Contribuição em dinheiro</option>
+              </select>
+            </div>
+
+            <div style="margin-top:8px" class="inline">
+              <label><input type="checkbox" id="qcollect" /> Solicitar retirada</label>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button id="btnWhatsapp" class="btn btn-primary" aria-label="Enviar por WhatsApp">Enviar WhatsApp</button>
+              <button id="btnAdd" class="btn btn-ghost" aria-label="Registrar doação local">Registrar</button>
+            </div>
+
+            <div style="margin-top:10px">
+              <small class="muted-2">Ou envie um e-mail para <a href="mailto:7094406@aluno.uniasselvi.com.br">7094406@aluno.uniasselvi.com.br</a></small>
+            </div>
+          </form>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- COMO DOAR -->
+    <section id="como-doar" class="section reveal" aria-labelledby="como-doar-title">
+      <h3 id="como-doar-title">Como doar — passos simples</h3>
+      <div class="grid-3" style="margin-top:12px">
+        <div class="feature">
+          <h4>1. Separe</h4>
+          <p class="small-muted">Separe brinquedos limpos e em bom estado — sem peças quebradas. Para itens eletrônicos inclua pilhas novas.</p>
+        </div>
+        <div class="feature">
+          <h4>2. Escolha como doar</h4>
+          <p class="small-muted">Leve a um ponto de coleta, combine retirada via WhatsApp ou envie uma contribuição financeira.</p>
+        </div>
+        <div class="feature">
+          <h4>3. Compartilhe</h4>
+          <p class="small-muted">Compartilhe o link da campanha e incentive amigos e empresas a participarem.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PONTOS DE COLETA + MAPA -->
+    <section id="pontos" class="section reveal" aria-labelledby="pontos-title">
+      <h3 id="pontos-title">Pontos de Coleta e Mapa</h3>
+      <p class="small-muted">Clique em um ponto para obter instruções ou solicite retirada pelo WhatsApp.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 420px;gap:16px;margin-top:12px">
+        <div>
+          <!-- Lista de pontos (exemplo) -->
+          <div class="feature" style="margin-bottom:10px">
+            <h4>Ponto Central — Uniasselvi polo Velha</h4>
+            <p class="small-muted">Seg-Sex • 9h–18h • Informar Equipe do Ronald Velasquez</p>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button class="btn btn-ghost" onclick="focusOnMap(-26.915847, -49.080380)">Abrir no mapa</button>
+              <button class="btn btn-primary" onclick="preMsg('Quero levar as doações ao Ponto Central — Praça da Alegria')">Combinar via WhatsApp</button>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div style="min-height:220px;border-radius:10px;overflow:hidden">
+          <!-- OpenStreetMap iframe embed (local coords de exemplo) -->
+<iframe width="425" height="350" src="https://www.openstreetmap.org/export/embed.html?bbox=-49.081061482429504%2C-26.916361214671937%2C-49.079698920249946%2C-26.91533280446578&amp;layer=mapnik" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?#map=19/-26.915847/-49.080380">Ver mapa ampliado</a></small>        </div>
+      </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section id="galeria" class="section reveal" aria-labelledby="galeria-title">
+      <h3 id="galeria-title">Galeria — Brinquedos recebidos</h3>
+      <p class="small-muted">Veja algumas contribuições. Use o botão de registrar para adicionar localmente (apenas demonstração).</p>
+
+      <div class="gallery" id="gallery">
+        <!-- imagens com lazy-loading -->
+        <img data-src="/assets/thumb1.jpg" alt="Brinquedo 1" loading="lazy" class="lazy" />
+        <img data-src="/assets/thumb2.jpg" alt="Brinquedo 2" loading="lazy" class="lazy" />
+        <img data-src="/assets/thumb3.jpg" alt="Brinquedo 3" loading="lazy" class="lazy" />
+        <img data-src="/assets/thumb4.jpg" alt="Brinquedo 4" loading="lazy" class="lazy" />
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section reveal" aria-labelledby="faq-title">
+      <h3 id="faq-title">Perguntas frequentes</h3>
+      <div class="faq-item" id="faq1">
+        <div class="faq-question" tabindex="0">
+          <span>Quais brinquedos são aceitos?</span>
+          <span class="muted-2">+</span>
+        </div>
+        <div class="faq-answer">Brinquedos limpos, sem peças quebradas. Brinquedos eletrônicos devem vir com pilhas novas e em bom funcionamento.</div>
+      </div>
+
+      <div class="faq-item" id="faq2">
+        <div class="faq-question" tabindex="0">
+          <span>Posso agendar retirada?</span>
+          <span class="muted-2">+</span>
+        </div>
+        <div class="faq-answer">Sim — combine pelo WhatsApp e informe endereço e quantidade aproximada.</div>
+      </div>
+    </section>
+
+    <!-- CONTATO / FORMULARIO COMPLETO -->
+    <section id="contato" class="section reveal" aria-labelledby="contato-title">
+      <h3 id="contato-title">Fale conosco</h3>
+      <p class="small-muted">Use este formulário para combinar entrega, retirada ou enviar dúvidas.</p>
+
+      <form id="formFull" style="margin-top:12px;display:grid;grid-template-columns:1fr 320px;gap:12px" aria-label="Formulário de contato completo">
+        <div>
+          <label for="nome">Nome completo</label>
+          <input id="nome" name="nome" type="text" placeholder="Seu nome" required />
+
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" placeholder="seu@email.com" />
+
+          <label for="quantidade">Quantidade aproximada</label>
+          <input id="quantidade" name="quantidade" type="text" placeholder="Ex: 3 brinquedos / 1 caixa" />
+
+          <label for="detalhe">Mensagem</label>
+          <textarea id="detalhe" name="detalhe" placeholder="Como prefere doar? Local, retirada, horário..." rows="6"></textarea>
+
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn btn-primary" type="submit">Enviar via WhatsApp</button>
+            <button class="btn btn-ghost" type="button" id="btnMail">Enviar por e-mail</button>
+          </div>
+        </div>
+
+        <aside style="background:linear-gradient(180deg,#fff,#f7fffe);padding:12px;border-radius:10px">
+          <h4 style="margin-top:0">Informações úteis</h4>
+          <p class="small-muted">Número de contato e horário de atendimento.</p>
+          <p><strong>WhatsApp:</strong> <span id="whatsLabel">+55 (47) 98486-3051</span></p>
+          <p><strong>E-mail:</strong> <a href="mailto:7094406@aluno.uniasselvi.com.br">7094406@aluno.uniasselvi.com.br</a></p>
+          <div style="margin-top:12px">
+            <strong>Ações rápidas</strong>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button class="btn btn-ghost" onclick="preMsg('Gostaria de entregar minhas doações. Como proceder?')">Perguntar</button>
+              <button class="btn btn-ghost" onclick="preMsg('Quero agendar retirada das doações')">Agendar</button>
+            </div>
+          </div>
+        </aside>
+      </form>
+    </section>
+  </main>
+
+  <!-- Floating Whatsapp -->
+  <div class="whatsapp-fab" id="whatsFab" role="button" aria-label="Abrir WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.373 0 .04 5.333.04 12c0 2.116.552 4.195 1.6 6.025L0 24l6.2-1.6A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12 0-1.975-.47-3.84-1.48-5.52zM12 21.6c-1.516 0-3.02-.408-4.324-1.18l-.312-.188-3.684.952.992-3.392-.204-.36A8.4 8.4 0 1 1 20.4 12 8.37 8.37 0 0 1 12 21.6zM17.28 14.64c-.312-.156-1.84-.912-2.12-1.016-.28-.104-.488-.156-.696.156s-.8 1.016-.976 1.224c-.18.208-.36.232-.672.08-.312-.156-1.316-.484-2.504-1.54-.928-.832-1.552-1.86-1.736-2.172-.18-.312-.02-.48.14-.636.144-.136.312-.36.468-.54.156-.18.208-.312.312-.52.1-.208.048-.39-.024-.546-.072-.156-.696-1.68-.952-2.3-.252-.6-.504-.52-.696-.532l-.6-.012c-.208 0-.544.076-.832.312-.28.236-1.064 1.04-1.064 2.528s1.09 2.932 1.24 3.136c.156.208 2.14 3.28 5.184 4.596 3.044 1.312 3.044.872 3.588.82.548-.052 1.78-.72 2.032-1.416.252-.694.252-1.288.176-1.416-.076-.12-.28-.176-.592-.332z"/>
+    </svg>
+  </div>
+
+  <footer>
+    <div class="container">
+      <small>© <span id="ano"></span> Campanha de Brinquedos — Organizador: <strong>Equipe Solidária</strong></small>
+      <div style="margin-top:6px"><small class="muted-2">Feito com ♡ — Compartilhe o site para aumentar as doações</small></div>
+    </div>
+  </footer>
+
+  <script>
+    /* ========== Configurações (edite conforme necessário) ========== */
+    const CONFIG = {
+      whatsappNumber: '5547984863051', // sem +/00, formato internacional
+      email: '7094406@aluno.uniasselvi.com.br',
+      donationMeta: 500,            // meta de brinquedos
+      initialReceived: 0,          // valor inicial (pode vir de API)
+      galleryPlaceholders: ['/assets/thumb1.jpg','/assets/thumb2.jpg','/assets/thumb3.jpg','/assets/thumb4.jpg']
+    };
+
+    // init
+    document.getElementById('ano').textContent = new Date().getFullYear();
+    document.getElementById('meta').textContent = CONFIG.donationMeta;
+    let received = Number(localStorage.getItem('received')) || CONFIG.initialReceived;
+    const receivedEl = document.getElementById('received');
+    const progressEl = document.getElementById('progressBar');
+    const progressTxt = document.getElementById('progressText');
+    updateProgress();
+
+    // reveal on scroll (simple IntersectionObserver)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, {threshold:0.14});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // lazy-load gallery images
+    document.querySelectorAll('.lazy').forEach(img => {
+      const src = img.dataset.src || img.getAttribute('src');
+      if(src) img.src = src;
+    });
+
+    // Hero CTA
+    document.getElementById('btn-donar').addEventListener('click', () => {
+      document.getElementById('contato').scrollIntoView({behavior:'smooth',block:'start'});
+      document.getElementById('nome')?.focus();
+    });
+
+    // WhatsApp FAB open
+    const openWhats = (text='Olá! Gostaria de participar da campanha e informar minha doação.') => {
+      const url = `https://wa.me/${CONFIG.whatsappNumber}?text=` + encodeURIComponent(text);
+      window.open(url,'_blank');
+    };
+    document.getElementById('whatsFab').addEventListener('click', () => openWhats('Olá! Quero ajudar na campanha de brinquedos.'));
+    document.getElementById('btnWhatsapp').addEventListener('click', function(){
+      const name = document.getElementById('qname').value.trim() || 'Nome não informado';
+      const email = document.getElementById('qemail').value.trim();
+      const type = document.getElementById('qtype').value;
+      const collect = document.getElementById('qcollect').checked ? 'Sim' : 'Não';
+      const text = `Olá, meu nome é ${name}. Tipo: ${type}. Solicitar retirada: ${collect}. E-mail: ${email || 'não informado'}.`;
+      openWhats(text);
+    });
+
+    // Pre-fill quick messages from other buttons
+    function preMsg(msg){
+      openWhats(msg);
+    }
+
+    // Share button
+    document.getElementById('btn-compartilhar').addEventListener('click', async () => {
+      const shareData = {title:'Campanha de Brinquedos', text:'Participe da campanha — doe brinquedos!', url:location.href};
+      if (navigator.share) {
+        try { await navigator.share(shareData); } catch(e){ alert('Compartilhamento cancelado'); }
+      } else {
+        // fallback copy
+        await navigator.clipboard.writeText(location.href);
+        alert('Link copiado — compartilhe com amigos!');
+      }
+    });
+
+    // Form full submit -> Whatsapp
+    document.getElementById('formFull').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value.trim() || 'Nome não informado';
+      const email = document.getElementById('email').value.trim() || 'não informado';
+      const quantidade = document.getElementById('quantidade').value.trim() || 'não informado';
+      const detalhe = document.getElementById('detalhe').value.trim() || '';
+      const texto = `Olá, meu nome é ${nome}. E-mail: ${email}. Quantidade: ${quantidade}. Mensagem: ${detalhe}`;
+      openWhats(texto);
+    });
+
+    // Button mail fallback
+    document.getElementById('btnMail').addEventListener('click', () => {
+      const nome = encodeURIComponent(document.getElementById('nome').value || '');
+      const body = encodeURIComponent(document.getElementById('detalhe').value || '');
+      window.location.href = `mailto:${CONFIG.email}?subject=Contato%20Campanha%20de%20Brinquedos%20-%20${nome}&body=${body}`;
+    });
+
+    // Register local donation (demo)
+    document.getElementById('btnAdd').addEventListener('click', () => {
+      received = Number(localStorage.getItem('received')) || CONFIG.initialReceived;
+      received += 1;
+      localStorage.setItem('received', received);
+      updateProgress();
+      toast('Obrigado! Registro local atualizado (demo).');
+    });
+
+    function updateProgress(){
+      const meta = Number(CONFIG.donationMeta) || 1;
+      received = Number(localStorage.getItem('received')) || CONFIG.initialReceived;
+      receivedEl.textContent = received;
+      const pct = Math.min(100, Math.round((received / meta) * 100));
+      progressEl.style.width = pct + '%';
+      progressTxt.textContent = `${pct}% da meta alcançada (${received} / ${meta})`;
+    }
+
+    // Simple toast (temporário)
+    function toast(msg){
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.style.position='fixed';
+      t.style.bottom='92px';
+      t.style.right='18px';
+      t.style.background='rgba(2,99,88,0.96)';
+      t.style.color='#fff';
+      t.style.padding='10px 14px';
+      t.style.borderRadius='8px';
+      t.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)';
+      t.style.zIndex=99999;
+      document.body.appendChild(t);
+      setTimeout(()=>t.remove(),3500);
+    }
+
+    // FAQ accordion behavior
+    document.querySelectorAll('.faq-item .faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const parent = q.parentElement;
+        parent.classList.toggle('open');
+      });
+      q.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') q.click(); });
+    });
+
+    // Simple function to adjust iframe bbox (opens OSM with a focused bbox)
+    function focusOnMap(lat,lon){
+      // use a tiny bbox around the point
+      const delta = 0.005;
+      const left = lon - delta;
+      const right = lon + delta;
+      const top = lat + delta;
+      const bottom = lat - delta;
+      const src = `https://www.openstreetmap.org/export/embed.html?bbox=${left}%2C${bottom}%2C${right}%2C${top}&layer=mapnik&marker=${lat}%2C${lon}`;
+      document.getElementById('osmFrame').src = src;
+      document.getElementById('pontos').scrollIntoView({behavior:'smooth'});
+    }
+
+    // Small enhancement: keyboard shortcut "w" to open WhatsApp (useful)
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'w' && !/input|textarea/i.test(document.activeElement.tagName)) {
+        openWhats('Olá! Quero saber como ajudar na Campanha de Brinquedos.');
+      }
+    });
+
+    // Try to prefill gallery with placeholders if missing images
+    (function fillGallery(){
+      const g = document.getElementById('gallery');
+      if(!g) return;
+      if(g.children.length === 0){
+        CONFIG.galleryPlaceholders.forEach(src => {
+          const img = document.createElement('img');
+          img.src = src; img.alt = 'Doação — imagem';
+          g.appendChild(img);
+        });
+      }
+    })();
+
+  </script>
+</body>
+</html>

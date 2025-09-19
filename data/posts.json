@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Como prolongar a vida útil do seu hardware",
+    "summary": "Práticas simples de manutenção preventiva para reduzir custos e aumentar tempo de funcionamento.",
+    "date": "2025-07-01"
+  },
+  {
+    "id": 2,
+    "title": "Integração IoT: do protótipo ao produto",
+    "summary": "Checklist técnico e administrativo para levar projetos embarcados ao mercado.",
+    "date": "2025-06-20"
+  },
+  {
+    "id": 3,
+    "title": "Destinação responsável de resíduos eletrônicos",
+    "summary": "Processos e parcerias para ecologicamente correto descarte e reaproveitamento.",
+    "date": "2025-05-15"
+  }
+]
