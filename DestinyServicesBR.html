@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Destiny Services — Soluções Digitais & Eletrônicas</title>
+  <meta name="description" content="Destiny Services — desenvolvimento, manutenção, importação e soluções sustentáveis em hardware e software." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script defer src="js/version.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body class="theme-default">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#">
+        <!-- SVG inline for crispness -->
+        <img src="assets/logo.svg" alt="Destiny Services logo" class="logo" />
+        <div class="brand-text">
+          <span class="brand-title">DESTINY</span>
+          <small class="brand-sub">SERVICES</small>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <button id="themeToggle" class="btn btn-ghost" title="Mudar tema">Tema</button>
+        <a href="#services" class="nav-link">Serviços</a>
+        <a href="#portfolio" class="nav-link">Portfólio</a>
+        <a href="#blog" class="nav-link">Blog</a>
+        <a href="#contact" class="btn btn-primary">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1>O destino certo para soluções digitais e eletrônicas</h1>
+          <p>Desenvolvimento de hardware e software, manutenção, importação, intermediação comercial e serviços sustentáveis.</p>
+          <a class="btn btn-primary" href="#contact">Fale Conosco</a>
+          <a class="btn btn-outline" href="#blog">Conheça o Blog</a>
+        </div>
+
+        <div class="hero-visual">
+          <!-- placeholder: could be a PNG or the logo in gold -->
+          <div class="hero-box">
+            <img src="assets/logo.svg" alt="Destiny Services" class="hero-logo"/>
+            <span class="version">v<span id="appVersion">—</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section">
+      <div class="container">
+        <h2>O que fazemos</h2>
+        <div class="grid grid-3">
+          <article class="card">
+            <h3>Desenvolvimento</h3>
+            <p>Softwares web, sistemas embarcados e firmwares integrados ao hardware.</p>
+          </article>
+          <article class="card">
+            <h3>Manutenção & Suporte</h3>
+            <p>Manutenção preventiva e corretiva de hardware e software, com foco em desempenho e longevidade.</p>
+          </article>
+          <article class="card">
+            <h3>Comércio & Importação</h3>
+            <p>Fornecimento, intermediação e importação de componentes e equipamentos eletrônicos.</p>
+          </article>
+          <article class="card">
+            <h3>Sustentabilidade</h3>
+            <p>Destinação responsável de resíduos eletrônicos e desenvolvimento de soluções energeticamente eficientes.</p>
+          </article>
+          <article class="card">
+            <h3>Formação & Conteúdo</h3>
+            <p>Blog técnico, guias e cursos para formação prática em eletrônica e software.</p>
+          </article>
+          <article class="card">
+            <h3>Integração</h3>
+            <p>Integramos soluções digitais com processos humanos — foco na humanização tecnológica.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio / Cases -->
+    <section id="portfolio" class="section muted">
+      <div class="container">
+        <h2>Portfólio</h2>
+        <p class="lead">Exemplos rápidos de aplicações: automação embarcada, painéis IoT, modernização de estações de serviço, e-commerce B2B para componentes.</p>
+        <div class="grid grid-2">
+          <div class="case">Projeto de modernização de laboratório de testes (hardware + dashboard).</div>
+          <div class="case">Plataforma de vendas B2B com integração de estoque e logística.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog -->
+    <section id="blog" class="section">
+      <div class="container">
+        <h2>Blog & Notícias</h2>
+        <p class="lead">Artigos técnicos, guias práticos e novidades da Destiny.</p>
+        <div id="posts" class="posts-grid">
+          <!-- Posts carregados por JS -->
+          <div class="post loading">Carregando posts…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2>Contato</h2>
+        <div class="grid grid-2">
+          <div>
+            <p>Envie e-mail para <a href="mailto:imperiobinario@hotmail.com">imperiobinario@hotmail.com</a> ou use o formulário abaixo.</p>
+            <ul class="contact-list">
+              <li><strong>CNAE:</strong> Comércio, manutenção eletrônica e desenvolvimento de software</li>
+              <li><strong>CNPJ (fornecido):</strong> 45.609.430/0001-43</li>
+            </ul>
+          </div>
+
+          <form id="contactForm" class="contact-form" onsubmit="handleContact(event)">
+            <label>Nome<input name="name" required></label>
+            <label>E-mail<input name="email" type="email" required></label>
+            <label>Assunto<input name="subject"></label>
+            <label>Mensagem<textarea name="message" rows="5" required></textarea></label>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Enviar</button>
+              <button type="reset" class="btn btn-ghost">Limpar</button>
+            </div>
+            <div id="contactStatus" aria-live="polite" class="status"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> Destiny Services — Todos os direitos reservados.</div>
+      <div class="footer-links">
+        <a href="#privacy">Política de Privacidade</a>
+        <a href="#terms">Termos</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
