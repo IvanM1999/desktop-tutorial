@@ -103,3 +103,93 @@
   });
 
 })();
+
+// Configuração da meta em dinheiro
+const CONFIG = {
+  toyMeta: 500,
+  moneyMeta: 5000.00
+};
+
+const moneyEl = document.getElementById('moneyBar');
+const moneyText = document.getElementById('moneyText');
+
+function formatMoney(v) {
+  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function updateMoney() {
+  let receivedMoney = Number(localStorage.getItem('moneyReceived')) || 0;
+  let percent = Math.min((receivedMoney / CONFIG.moneyMeta) * 100, 100);
+  if(moneyEl){
+    moneyEl.style.width = percent + '%';
+  }
+  const receivedEl = document.getElementById('receivedMoney');
+  const metaEl = document.getElementById('metaMoney');
+  if(receivedEl) receivedEl.textContent = formatMoney(receivedMoney);
+  if(metaEl) metaEl.textContent = formatMoney(CONFIG.moneyMeta);
+  if(moneyText) moneyText.textContent = `${formatMoney(receivedMoney)} / ${formatMoney(CONFIG.moneyMeta)}`;
+}
+
+// Ler valor inicial de money.txt
+fetch('money.txt')
+  .then(r => r.text())
+  .then(t => {
+    let v = parseFloat(t.trim().replace(',', '.'));
+    if(!isNaN(v)) localStorage.setItem('moneyReceived', v);
+    updateMoney();
+  })
+  .catch(e => console.warn('Erro ao carregar money.txt', e));
+
+
+
+// ---- Money progress (inserido automaticamente) ----
+if (typeof CONFIG === 'undefined') {
+  window.CONFIG = window.CONFIG || {};
+  CONFIG.toyMeta = CONFIG.toyMeta || 500;
+  CONFIG.moneyMeta = CONFIG.moneyMeta || 1000.00;
+} else {
+  CONFIG.moneyMeta = CONFIG.moneyMeta || 1000.00;
+}
+
+(function initMoneyProgress(){
+  const moneyEl = document.getElementById('moneyBar');
+  const moneyText = document.getElementById('moneyText');
+
+  function formatMoney(v) {
+    return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  function updateMoney(receivedMoney) {
+    const percent = Math.min((receivedMoney / CONFIG.moneyMeta) * 100, 100);
+    if (moneyEl) moneyEl.style.width = percent + '%';
+    const receivedEl = document.getElementById('receivedMoney');
+    const metaEl = document.getElementById('metaMoney');
+    if (receivedEl) receivedEl.textContent = formatMoney(receivedMoney);
+    if (metaEl) metaEl.textContent = formatMoney(CONFIG.moneyMeta);
+    if (moneyText) moneyText.textContent = `${formatMoney(receivedMoney)} / ${formatMoney(CONFIG.moneyMeta)}`;
+  }
+
+  // Try fetch money.txt, fallback to localStorage
+  fetch('money.txt?ts=' + Date.now())
+    .then(r => {
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    })
+    .then(t => {
+      const v = parseFloat((t||'').trim().replace(',', '.'));
+      if(!isNaN(v)) {
+        localStorage.setItem('moneyReceived', String(v));
+        updateMoney(v);
+      } else {
+        console.warn('money.txt não contém número válido:', JSON.stringify(t));
+        const stored = Number(localStorage.getItem('moneyReceived')) || 0;
+        updateMoney(stored);
+      }
+    })
+    .catch(err => {
+      console.warn('Erro ao carregar money.txt', err);
+      const stored = Number(localStorage.getItem('moneyReceived')) || 0;
+      updateMoney(stored);
+    });
+})(); 
+// ---- fim money ----

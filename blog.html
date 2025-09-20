@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Extensão no lugar do TCC | Guia prático Uniasselvi</title>
+  <meta name="description" content="Aprenda como substituir o TCC por projetos de extensão na Uniasselvi. Um guia simples e direto para entender as regras, montar o plano e entregar o relatório final com tranquilidade." />
+  <meta name="theme-color" content="#00BFA6" />
+  <style>
+    :root{
+      --accent:#FFD700;
+      --accent-2:#00BFA6;
+      --bg-overlay: rgba(0,0,0,0.45);
+      --glass: rgba(255,255,255,0.06);
+      --max-w:1100px;
+      --radius:14px;
+      --font-sans: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    /* reset */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font-sans);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      color:#06202a;
+      background:linear-gradient(180deg, #b2f7ef 0%, #9ef0e6 40%, #7ee5d6 100%);
+      min-height:100vh;
+      line-height:1.4;
+    }
+
+    /* header / layout */
+    header{
+      position:sticky;
+      top:0;
+      z-index:10;
+      width:100%;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+      border-bottom:1px solid rgba(0,0,0,0.06);
+      padding:12px 18px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      justify-content:space-between;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:52px;height:52px;border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.14);flex-shrink:0}
+    .logo img{width:100%;height:100%;object-fit:cover}
+    .brand h1{font-size:18px;margin:0;color:#0b3b3a}
+    nav a{margin-left:12px;text-decoration:none;color:#0b3b3a;font-weight:600}
+    .nav-actions{display:flex;gap:10px;align-items:center}
+
+    /* hero */
+    .hero{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:36px 20px 48px;
+      overflow:hidden;
+    }
+    .hero__bg{
+      position:absolute;
+      inset:0;
+      background-image: url('/assets/campanha.jpg');
+      background-position:center;
+      background-size:cover;
+      filter: blur(6px) saturate(1.05) contrast(1.02);
+      transform: scale(1.03);
+      opacity:0.9;
+      z-index:0;
+    }
+    .hero__overlay{
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(255,255,255,0.06) 50%);
+      z-index:1;
+    }
+    .container{
+      position:relative;
+      z-index:2;
+      width:100%;
+      max-width:var(--max-w);
+      margin:0 auto;
+    }
+    .hero-card{
+      margin-top:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+      border-radius:var(--radius);
+      padding:26px;
+      box-shadow: 0 12px 40px rgba(6,32,42,0.12);
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:22px;
+      align-items:center;
+    }
+    @media (max-width:920px){
+      .hero-card{grid-template-columns:1fr;padding:18px}
+      .logo{width:48px;height:48px}
+    }
+    .hero-card h2{margin:0 0 8px 0;font-size:28px;color:#0b3b3a;letter-spacing:0.2px}
+    .hero-card p.lead{margin:0 0 18px 0;color:#276767}
+
+    /* buttons */
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border-radius:12px;
+      padding:10px 16px;
+      font-weight:700;
+      cursor:pointer;
+      border:none;
+      text-decoration:none;
+      transition:transform .14s ease, box-shadow .14s ease;
+      box-shadow: 0 6px 20px rgba(11,59,58,0.08);
+      color:inherit;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#FFA500); color:#042a2a}
+    .btn-ghost{background:transparent;border:1px solid rgba(11,59,58,0.08); color:#042a2a}
+
+    /* card lateral (progresso / lembrete) */
+    .donation-card{
+      background: linear-gradient(180deg,#fff,#f6fffe);
+      border-radius:12px;
+      padding:14px;
+      box-shadow: 0 8px 24px rgba(3,26,24,0.06);
+    }
+    .donation-card small{display:block;color:#00695c;margin-bottom:8px}
+    .form-row{display:grid;grid-template-columns:1fr 110px;gap:8px}
+    label{font-size:13px;color:#064a48}
+    input[type="text"], input[type="email"], select, textarea{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid rgba(3,26,24,0.06);
+      background:transparent;
+      font-size:14px;
+      outline:none;
+    }
+    textarea{min-height:80px;resize:vertical}
+    .inline{display:flex;gap:8px;align-items:center}
+    .muted{color:#2d7c76;font-size:13px}
+    .progress{height:12px;background:linear-gradient(90deg,#e6fff9,#f3fff6);border-radius:999px;overflow:hidden;margin:12px 0;border:1px solid rgba(3,26,24,0.03)}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,#00c4a7,#00bfa6); width:0%; transition:width .4s ease}
+
+    /* main sections */
+    main{padding:28px 18px 120px}
+    .section{max-width:var(--max-w);margin:28px auto;padding:18px;background:rgba(255,255,255,0.9);border-radius:12px;box-shadow:0 8px 28px rgba(3,26,24,0.04)}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media (max-width:920px){ .grid-3{grid-template-columns:1fr} }
+    .feature{padding:16px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfffe)}
+    .feature h4{margin:0 0 8px 0}
+    .small-muted{font-size:13px;color:#2f7a73}
+
+    /* checklist steps */
+    .checklist{list-style:none;padding:0;margin:0}
+    .checklist li{display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:8px}
+    .checklist li + li{border-top:1px dashed rgba(0,0,0,0.04)}
+    .checklist input[type="checkbox"]{margin-top:4px}
+
+    /* gallery */
+    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    @media (max-width:920px){ .gallery{grid-template-columns:repeat(2,1fr)} }
+    .gallery img{width:100%;height:160px;object-fit:cover;border-radius:8px;display:block}
+
+    /* whatsapp fab */
+    .whatsapp-fab{position:fixed;right:18px;bottom:18px;z-index:9999;display:inline-grid;place-items:center;width:64px;height:64px;border-radius:999px;background:linear-gradient(180deg,#25D366,#128C7E);box-shadow:0 14px 34px rgba(18,140,126,0.26);cursor:pointer}
+    .whatsapp-fab svg{width:30px;height:30px;fill:#fff}
+
+    /* footer */
+    footer{padding:18px;text-align:center;color:#044f4c;font-size:14px}
+
+    /* helpers */
+    .muted-2{color:#376f6a}
+    .pill{display:inline-block;padding:6px 10px;background:#fff;border-radius:999px;font-weight:700}
+    .reveal{opacity:0;transform:translateY(14px);transition:all .7s cubic-bezier(.2,.9,.25,1)}
+    .reveal.visible{opacity:1;transform:none}
+    .pulse{animation:pulse 2.4s infinite}
+    .faq-item{border-top:1px dashed rgba(0,0,0,0.04)}
+    .faq-question{display:flex;align-items:center;justify-content:space-between;padding:12px;cursor:pointer}
+    .faq-answer{padding:0 12px 12px 12px;display:none;color:#244d47}
+    .faq-item.open .faq-answer{display:block}
+    .toast{
+      position:fixed;
+      right:18px;
+      bottom:94px;
+      background:#044f4c;
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.18);
+      transform:translateY(8px);
+      opacity:0;
+      transition:opacity .28s ease, transform .28s ease;
+      z-index:99999;
+    }
+    .toast.show{opacity:1;transform:none}
+    a:focus,button:focus,input:focus,select:focus,textarea:focus{outline:3px solid rgba(0,191,166,0.18);outline-offset:2px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <img src="/assets/logo.jpg" alt="Logo" />
+      </div>
+      <h1>Guia de Extensão</h1>
+    </div>
+    <nav aria-label="Navegação principal">
+      <a href="#faq">FAQ</a>
+      <a href="#downloads" style="margin-left:12px">Modelos</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" href="#modelos">Inspiração</a>
+      <a class="btn btn-primary" href="#passo-a-passo">Começar</a>
+    </div>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__bg" role="presentation"></div>
+    <div class="hero__overlay" role="presentation"></div>
+    <div class="container">
+      <div class="hero-card reveal" id="hero-card">
+        <div>
+          <h2 id="hero-title">Extensão no lugar do TCC — Guia prático</h2>
+          <p class="lead">
+            Um roteiro objetivo para planejar, executar e entregar seu projeto de extensão sem cair em armadilhas burocráticas.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#passo-a-passo">Quero começar</a>
+            <a class="btn btn-ghost" href="#faq">Tirar dúvidas</a>
+          </div>
+          <p class="muted" style="margin-top:10px">
+            Dica rápida: confirme prazos no AVA e valide tudo com a coordenação antes de enviar.
+          </p>
+        </div>
+
+        <aside class="donation-card" aria-labelledby="progress-label">
+          <small id="progress-label">Seu progresso</small>
+          <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Progresso do checklist">
+            <i id="progressBar" style="width:0%"></i>
+          </div>
+          <div class="small-muted">Etapas concluídas: <strong id="progressText">0%</strong></div>
+          <hr style="border:none;border-top:1px solid rgba(0,0,0,0.06);margin:12px 0" />
+          <form id="reminderForm" aria-label="Salvar lembrete">
+            <div class="form-row">
+              <div>
+                <label for="name">Seu nome</label>
+                <input id="name" name="name" type="text" placeholder="Ex.: Ana Souza" required />
+              </div>
+              <div>
+                <label for="periodo">Período</label>
+                <select id="periodo" name="periodo" required>
+                  <option value="">Selecione</option>
+                  <option>4º</option>
+                  <option>6º</option>
+                  <option>8º</option>
+                  <option>10º</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-top:8px">
+              <label for="email">E-mail</label>
+              <input id="email" name="email" type="email" placeholder="voce@email.com" required />
+            </div>
+            <div style="margin-top:8px">
+              <label for="lembrete">O que lembrar?</label>
+              <textarea id="lembrete" name="lembrete" placeholder="Ex.: Entregar relatório parcial até dia 30."></textarea>
+            </div>
+            <div class="inline" style="margin-top:10px;justify-content:space-between;align-items:center">
+              <span class="muted">Receba um lembrete local (7 dias antes)</span>
+              <button class="btn btn-primary" type="submit">Salvar</button>
+            </div>
+          </form>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section id="como-funciona" class="section reveal">
+      <h3>Como funciona a substituição do TCC</h3>
+      <p>
+        Em muitos cursos, o trabalho de conclusão (monografia) pode ser substituído por ações extensionistas documentadas — ou seja, trabalhos aplicados que conectam universidade e comunidade. O importante é que o curso valide o produto e as horas cumpridas.
+      </p>
+
+      <div class="grid-3" role="list">
+        <div class="feature" role="listitem">
+          <h4>Base prática</h4>
+          <p class="small-muted">Projetos de extensão priorizam aplicação: atividades, entregáveis e impacto com público real.</p>
+        </div>
+        <div class="feature" role="listitem">
+          <h4>Produto esperado</h4>
+          <p class="small-muted">Relatório técnico, portfólio, guia prático ou produto aplicado — isso depende do seu curso.</p>
+        </div>
+        <div class="feature" role="listitem">
+          <h4>Conferência</h4>
+          <p class="small-muted">Coordenação e orientador confirmam se o projeto atende às exigências (carga horária, escopo e avaliação).</p>
+        </div>
+      </div>
+
+      <p class="muted-2" style="margin-top:10px">Atenção: regras variam por curso e campus. Este guia é prático — confirme o padrão no AVA e no PPC.</p>
+    </section>
+
+    <section id="por-que" class="section reveal">
+      <h3>Por que muitos cursos adotam isso</h3>
+      <ul>
+        <li><strong>Aplicabilidade:</strong> você resolve um problema real e aprende na prática.</li>
+        <li><strong>Visibilidade:</strong> gera material (relatórios, guias, protótipos) que podem virar portfólio.</li>
+        <li><strong>Avaliação mais justa:</strong> consideram impacto e execução, não só escrita acadêmica.</li>
+      </ul>
+    </section>
+
+    <section id="passo-a-passo" class="section reveal" aria-labelledby="passo-title">
+      <h3 id="passo-title">Passo a passo prático</h3>
+      <ol>
+        <li><strong>Leia o PPC e o manual do curso:</strong> confirme horas, formato do produto e prazos.</li>
+        <li><strong>Identifique um problema real:</strong> converse com a comunidade, escola, ONG ou negócio local.</li>
+        <li><strong>Planeje de forma enxuta:</strong> objetivo, público, atividades, cronograma e indicadores simples.</li>
+        <li><strong>Peça validação:</strong> leve ao orientador/coordenação antes de executar.</li>
+        <li><strong>Execute em ciclos:</strong> pilote, colete evidências (fotos, listas, depoimentos) e ajuste.</li>
+        <li><strong>Analise resultados:</strong> compare métricas antes/depois e registre aprendizados.</li>
+        <li><strong>Monte o relatório:</strong> siga o modelo do curso e anexe evidências organizadas.</li>
+        <li><strong>Apresente e archive:</strong> defesa simbólica ou entrega formal; guarde cópias e backups.</li>
+      </ol>
+
+      <div class="feature" style="margin-top:12px">
+        <h4>Checklist interativo</h4>
+        <p class="small-muted">Marque as etapas concluídas — o progresso atualiza automaticamente.</p>
+        <ul id="checklist" class="checklist" aria-label="Checklist de etapas">
+          <li><label><input type="checkbox" data-step="0"> Leia o PPC / manual do curso</label></li>
+          <li><label><input type="checkbox" data-step="1"> Identifique problema real</label></li>
+          <li><label><input type="checkbox" data-step="2"> Monte plano enxuto</label></li>
+          <li><label><input type="checkbox" data-step="3"> Valide com orientador</label></li>
+          <li><label><input type="checkbox" data-step="4"> Execute e registre evidências</label></li>
+          <li><label><input type="checkbox" data-step="5"> Meça resultados</label></li>
+          <li><label><input type="checkbox" data-step="6"> Produza relatório final</label></li>
+          <li><label><input type="checkbox" data-step="7"> Apresente e archive</label></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="modelos" class="section reveal">
+      <h3>Ideias e modelos por área</h3>
+      <div class="grid-3">
+        <div class="feature">
+          <h4>Saúde</h4>
+          <ul class="small-muted">
+            <li>Oficinas de prevenção com material educativo e ficha de avaliação.</li>
+            <li>Protocolo de acolhimento para UBS com roteiro de treinamento.</li>
+          </ul>
+        </div>
+        <div class="feature">
+          <h4>Tecnologia</h4>
+          <ul class="small-muted">
+            <li>Site/app para divulgação de microempreendedores locais.</li>
+            <li>Planilha inteligente para controle de doações em ONG.</li>
+          </ul>
+        </div>
+        <div class="feature">
+          <h4>Educação</h4>
+          <ul class="small-muted">
+            <li>Sequência didática com materiais para professores da rede pública.</li>
+            <li>Feira de ciências com kits e manual de aplicação.</li>
+          </ul>
+        </div>
+        <div class="feature">
+          <h4>Negócios</h4>
+          <ul class="small-muted">
+            <li>Plano de marketing prático para MEIs com calendário e modelos.</li>
+            <li>Oficinas de educação financeira com material visual.</li>
+          </ul>
+        </div>
+        <div class="feature">
+          <h4>Direito e cidadania</h4>
+          <ul class="small-muted">
+            <li>Cartilhas de direitos em linguagem acessível.</li>
+            <li>Mutirão informativo com formulário de encaminhamento.</li>
+          </ul>
+        </div>
+        <div class="feature">
+          <h4>Meio ambiente</h4>
+          <ul class="small-muted">
+            <li>Campanhas de reciclagem com mapa de pontos de coleta.</li>
+            <li>Projeto de horta urbana com manual de manutenção.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="downloads" class="feature" style="margin-top:14px">
+        <h4>Modelos prontos para baixar</h4>
+        <p class="small-muted">Arquivos de exemplo (.docx/.xlsx) que você pode usar como base — substitua pelo padrão do seu curso quando necessário.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+          <button class="btn btn-ghost" id="downloadPlano">Plano de Projeto (.docx)</button>
+          <button class="btn btn-ghost" id="downloadRelatorio">Relatório Técnico (.docx)</button>
+          <button class="btn btn-ghost" id="downloadPlanilha">Planilha de Horas (.xlsx)</button>
+        </div>
+        <p class="small-muted" style="margin-top:10px">Obs.: os arquivos aqui são modelos simples — ajuste formatação e campos conforme seu curso.</p>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <h3>Avaliação, documentos e ética</h3>
+      <ul>
+        <li><strong>Critérios comuns:</strong> relevância do problema, execução, qualidade das evidências e reflexão crítica.</li>
+        <li><strong>Documentos essenciais:</strong> plano aprovado, listas de presença, fotos com autorização, relatórios e anexos.</li>
+        <li><strong>Ética:</strong> obtenha consentimento quando necessário e proteja dados pessoais.</li>
+        <li><strong>Acessibilidade:</strong> entregue materiais legíveis e com alternativas textuais.</li>
+      </ul>
+      <p class="muted-2">Se houver pesquisa com seres humanos (além de atividades educativas usuais), verifique a necessidade de submissão ao comitê de ética.</p>
+    </section>
+
+    <section id="faq" class="section reveal" aria-labelledby="faq-title">
+      <h3 id="faq-title">FAQ — dúvidas frequentes</h3>
+
+      <div class="faq-item" id="faq1">
+        <div class="faq-question" role="button" tabindex="0" aria-controls="a1" aria-expanded="false">
+          <span>Posso trocar o TCC por qualquer ação de extensão?</span>
+          <span aria-hidden="true">+</span>
+        </div>
+        <div class="faq-answer" id="a1">
+          <p>Nem sempre. Depende do regulamento do seu curso. O ideal é validar o escopo e a carga horária com a coordenação antes de executar.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" id="faq2">
+        <div class="faq-question" role="button" tabindex="0" aria-controls="a2" aria-expanded="false">
+          <span>Quantas horas preciso cumprir?</span>
+          <span aria-hidden="true">+</span>
+        </div>
+        <div class="faq-answer" id="a2">
+          <p>O número varia por curso. Verifique o PPC e os comunicados da coordenação no AVA.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" id="faq3">
+        <div class="faq-question" role="button" tabindex="0" aria-controls="a3" aria-expanded="false">
+          <span>Que evidências devo anexar ao relatório?</span>
+          <span aria-hidden="true">+</span>
+        </div>
+        <div class="faq-answer" id="a3">
+          <p>Fotos, listas de presença, formulários preenchidos, apresentações, depoimentos e planilhas de acompanhamento costumam ser aceitos. Sempre anexe cópia dos documentos que comprovem a execução.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <h3>Legislação e orientações oficiais</h3>
+      <p class="small-muted">A curricularização da extensão é uma prática incentivada e adotada por várias instituições. Para decisões formais, consulte a legislação e os documentos oficiais da sua instituição e do MEC.</p>
+    </section>
+  </main>
+
+  <button class="whatsapp-fab" id="whatsFab" aria-label="Fale conosco pelo WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.672.15-.197.297-.767.967-.94 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.173.198-.297.298-.496.099-.198.05-.372-.025-.521-.074-.148-.672-1.611-.921-2.206-.242-.579-.487-.5-.672-.51l-.572-.01c-.197 0-.52.074-.793.372s-1.04 1.016-1.04 2.479 1.064 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487 0 0 .447.198.806.198s.83-.074 1.195-.372c.365-.297 1.165-1.042 1.325-2.049.16-1.007.16-1.868.114-2.048-.05-.198-.197-.297-.445-.446zM12 2C6.477 2 2 6.477 2 12c0 1.99.622 3.828 1.692 5.357L2 22l4.802-1.59C8.156 20.338 9.999 21 12 21c5.523 0 10-4.477 10-9s-4.477-10-10-10z"/></svg>
+  </button>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer>
+    <div class="container">
+      <small>Guia prático — use como apoio. Verifique normas locais no AVA e com a coordenação do seu curso.</small>
+    </div>
+  </footer>
+
+  <script>
+    /* ---------- helpers e chaves do localStorage ---------- */
+    const LS_PREFIX = 'guiaExt:';
+    const LS_STEPS = LS_PREFIX + 'steps';
+    const LS_REMINDER = LS_PREFIX + 'reminder';
+
+    /* ---------- progress bar ---------- */
+    const totalSteps = 8;
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+
+    function getSavedSteps(){
+      try{
+        const raw = localStorage.getItem(LS_STEPS);
+        if(!raw) return new Array(totalSteps).fill(false);
+        const parsed = JSON.parse(raw);
+        if(!Array.isArray(parsed) || parsed.length !== totalSteps) return new Array(totalSteps).fill(false);
+        return parsed.map(Boolean);
+      }catch(e){
+        console.warn('Erro lendo steps do localStorage', e);
+        return new Array(totalSteps).fill(false);
+      }
+    }
+
+    function saveSteps(arr){
+      try{ localStorage.setItem(LS_STEPS, JSON.stringify(arr)); }catch(e){}
+    }
+
+    function updateProgressUI(){
+      const steps = getSavedSteps();
+      const completed = steps.reduce((acc, cur) => acc + (cur ? 1 : 0), 0);
+      const pct = Math.round((completed / totalSteps) * 100);
+      progressBar.style.width = pct + '%';
+      progressText.textContent = pct + '%';
+      // atualizar aria
+      const progressEl = document.querySelector('.progress');
+      if(progressEl) progressEl.setAttribute('aria-valuenow', pct);
+    }
+
+    /* ---------- checklist: carregar estado e eventos ---------- */
+    const checklistEl = document.getElementById('checklist');
+    if(checklistEl){
+      // inicializar checkboxes com estado do localStorage
+      const saved = getSavedSteps();
+      const inputs = checklistEl.querySelectorAll('input[type="checkbox"]');
+      inputs.forEach((cb) => {
+        const idx = Number(cb.dataset.step);
+        cb.checked = !!saved[idx];
+        cb.addEventListener('change', () => {
+          const arr = getSavedSteps();
+          arr[idx] = !!cb.checked;
+          saveSteps(arr);
+          updateProgressUI();
+          showToast('Progresso atualizado');
+        });
+      });
+      updateProgressUI();
+    }
+
+    /* ---------- lembrete: salvar no localStorage e notificar ---------- */
+    const reminderForm = document.getElementById('reminderForm');
+    const toastEl = document.getElementById('toast');
+
+    function showToast(text, ms = 3200){
+      toastEl.textContent = text;
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), ms);
+    }
+
+    if(reminderForm){
+      reminderForm.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const data = {
+          name: reminderForm.name.value.trim(),
+          periodo: reminderForm.periodo.value,
+          email: reminderForm.email.value.trim(),
+          lembrete: reminderForm.lembrete.value.trim(),
+          savedAt: new Date().toISOString()
+        };
+        try{
+          localStorage.setItem(LS_REMINDER, JSON.stringify(data));
+          showToast('Lembrete salvo localmente ✓');
+        }catch(e){
+          console.error('Erro ao salvar lembrete', e);
+          showToast('Erro ao salvar (ver console)');
+        }
+      });
+
+      // preencher o form se já existe lembrete salvo
+      try {
+        const raw = localStorage.getItem(LS_REMINDER);
+        if(raw){
+          const parsed = JSON.parse(raw);
+          if(parsed && typeof parsed === 'object'){
+            reminderForm.name.value = parsed.name || '';
+            reminderForm.periodo.value = parsed.periodo || '';
+            reminderForm.email.value = parsed.email || '';
+            reminderForm.lembrete.value = parsed.lembrete || '';
+          }
+        }
+      }catch(e){}
+    }
+
+    /* ---------- downloads de modelos (cria Blobs simples) ---------- */
+    function downloadFile(filename, content, mime='application/octet-stream'){
+      const blob = new Blob([content], {type: mime});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    }
+
+    document.getElementById('downloadPlano')?.addEventListener('click', () => {
+      const text = [
+        'PLANO DE PROJETO - Modelo (preencha os campos conforme orientação do curso)',
+        '',
+        'Título:',
+        'Objetivo:',
+        'Justificativa:',
+        'Público-alvo:',
+        'Atividades:',
+        'Cronograma:',
+        'Indicadores de sucesso:',
+        'Riscos e mitigações:',
+        'Assinatura do orientador:'
+      ].join('\\n');
+      downloadFile('Plano-de-Projeto-Extensao.docx', text, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+      showToast('Modelo de plano pronto para baixar');
+    });
+
+    document.getElementById('downloadRelatorio')?.addEventListener('click', () => {
+      const text = [
+        'RELATÓRIO TÉCNICO - Modelo (organize anexos: fotos, listas, planilhas)',
+        '',
+        'Resumo executivo:',
+        'Introdução:',
+        'Metodologia:',
+        'Resultados:',
+        'Discussão:',
+        'Conclusão e recomendações:',
+        'Anexos:'
+      ].join('\\n');
+      downloadFile('Relatorio-Tecnico-Extensao.docx', text, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+      showToast('Modelo de relatório pronto para baixar');
+    });
+
+    document.getElementById('downloadPlanilha')?.addEventListener('click', () => {
+      const csvHeader = 'Data,Atividade,Participantes,Horas,Observações\\n';
+      const sample = '2025-01-10,Oficina de Saúde,25,3,Registro de presenças\\n';
+      const content = csvHeader + sample;
+      // baixar como xlsx com mime genérico (planilha simples em CSV)
+      downloadFile('Planilha-Horas-Evidencias.xlsx', content, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      showToast('Planilha de horas (modelo CSV) pronta para baixar');
+    });
+
+    /* ---------- FAQ accordion ---------- */
+    document.querySelectorAll('.faq-question').forEach((q) => {
+      q.addEventListener('click', () => {
+        const parent = q.parentElement;
+        const expanded = parent.classList.toggle('open');
+        const control = q.getAttribute('aria-controls');
+        q.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      });
+      q.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          q.click();
+        }
+      });
+    });
+
+    /* ---------- reveal on scroll (simples) ---------- */
+    function revealOnScroll(){
+      document.querySelectorAll('.reveal').forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 60){
+          el.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll, {passive:true});
+    window.addEventListener('resize', revealOnScroll);
+    // rodar ao carregar
+    revealOnScroll();
+
+    /* ---------- WhatsApp fab (mensagem padrão) ---------- */
+    document.getElementById('whatsFab')?.addEventListener('click', () => {
+      const phone = ''; // seu número no formato internacional sem +, ex: 5511999999999 -> deixar vazio se quiser decidir depois
+      const text = encodeURIComponent('Olá! Tenho dúvidas sobre substituição do TCC por extensão. Pode me orientar?');
+      if(phone){
+        window.open('https://wa.me/' + phone + '?text=' + text, '_blank');
+      } else {
+        // abrir o WhatsApp web com link sem número (abre home do WhatsApp)
+        window.open('https://web.whatsapp.com/', '_blank');
+      }
+    });
+
+    /* ---------- inicialização: caso não haja estado, inicializa com zero --------- */
+    (function init(){
+      // se não houver LS_STEPS, inicializa como array false
+      if(!localStorage.getItem(LS_STEPS)){
+        saveSteps(new Array(totalSteps).fill(false));
+      }
+      updateProgressUI();
+    })();
+  </script>
+</body>
+</html>

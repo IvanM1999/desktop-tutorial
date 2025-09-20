@@ -1,3 +1,4 @@
+<!--index.html-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -280,8 +281,9 @@
 
     <div class="nav-actions" role="navigation" aria-label="Ações principais">
       <a class="btn btn-ghost" href="#como-doar">Como doar</a>
-      <a class="btn btn-ghost" href="#pontos">Pontos de Coleta</a>
+      <a class="btn btn-ghost" href="galeria.html">Comprovantes PIX</a>
       <a class="btn btn-primary" href="#contato">Quero Ajudar</a>
+
     </div>
   </header>
 
@@ -302,13 +304,20 @@
           </div>
 
           <div style="margin-top:12px">
-            <small class="muted">Meta: <strong id="meta">500</strong> brinquedos • Recebidos: <strong id="received">23</strong></small>
+            <small class="muted">Meta: <strong id="meta">100</strong> brinquedos • Recebidos: <strong id="received">0</strong></small>
             <div class="progress" aria-hidden="true" title="Progresso de doações">
               <i id="progressBar"></i>
             </div>
             <div aria-live="polite" id="progressText" class="muted" style="font-size:13px"></div>
           </div>
         </div>
+        <div style="margin-top:12px">
+  <small class="muted">Meta: <strong id="metaMoney">R$ 500,00</strong> • Recebido: <strong id="receivedMoney">R$ 10,00</strong></small>
+  <div class="progress money" aria-hidden="true" title="Progresso de doações em dinheiro">
+    <i id="moneyBar"></i>
+  </div>
+  <div aria-live="polite" id="moneyText" class="muted" style="font-size:13px"></div>
+</div>
 
         <aside class="donation-card" aria-label="Formulário rápido de doação">
           <small>Formulário rápido — envio por WhatsApp</small>
@@ -475,9 +484,14 @@
 
   <footer>
     <div class="container">
-      <small>© <span id="ano"></span> Campanha de Brinquedos — Organizador: <strong>Equipe Solidária</strong></small>
-      <div style="margin-top:6px"><small class="muted-2">Feito com ♡ — Compartilhe o site para aumentar as doações</small></div>
+      <small>© <span id="ano"></span> Campanha de Brinquedos — Organizador: <strong>Equipe Solidária Uniasselvi</strong></small>
+      <div style="margin-top:6px"><small class="muted-2">Feito com ♡ — Compartilhe o site para multiplicar o amor com as doações</small></div>
+      <a href="extensao/index.html" class="btn" style="display:inline-block; margin-top:12px; padding:10px 16px; border-radius:12px; background-color: #00BFA6; color: #ffffff; text-decoration: none; font-weight: 700; box-shadow: 0 6px 20px rgba(11,59,58,0.08); transition: transform .14s ease;">  Extensão </a>
+<a href="IvanMontibeller.onrender.com" class="btn btn-primary" style="margin-top:12px;">
+  Desenvolvedor
+</a>
     </div>
+    
   </footer>
 
   <script>
@@ -493,11 +507,35 @@
     // init
     document.getElementById('ano').textContent = new Date().getFullYear();
     document.getElementById('meta').textContent = CONFIG.donationMeta;
-    let received = Number(localStorage.getItem('received')) || CONFIG.initialReceived;
+    let received = CONFIG.initialReceived; // começamos do valor inicial e depois sobrescrevemos com doacoes.txt
     const receivedEl = document.getElementById('received');
     const progressEl = document.getElementById('progressBar');
     const progressTxt = document.getElementById('progressText');
+    // Carrega doacoes.txt (se existir) para sobrescrever o valor local de 'received'.
+    // Faz bust de cache com timestamp para evitar versão antiga.
+    // Chamamos updateProgress() imediatamente para mostrar estado inicial e depois novamente após leitura do arquivo.
     updateProgress();
+    fetch('./doacoes.txt?ts=' + Date.now())
+      .then(resp => {
+        if(!resp.ok) throw new Error('HTTP ' + resp.status);
+        return resp.text();
+      })
+      .then(text => {
+        const n = Number((text||'').trim());
+        if(!Number.isNaN(n)) {
+          received = n;
+          // grava no localStorage para manter coerência com o restante da lógica
+          localStorage.setItem('received', String(received));
+        } else {
+          console.warn('doacoes.txt não contém número válido:', JSON.stringify(text));
+        }
+      })
+      .catch(err => {
+        console.warn('Falha ao ler doacoes.txt — mantendo valor local:', err);
+      })
+      .finally(() => {
+        updateProgress(); // atualiza a barra após tentativa de leitura
+      });
 
     // reveal on scroll (simple IntersectionObserver)
     const io = new IntersectionObserver((entries) => {
@@ -562,14 +600,14 @@
       openWhats(texto);
     });
 
-    // Button mail fallback
+    // Botão fallback
     document.getElementById('btnMail').addEventListener('click', () => {
       const nome = encodeURIComponent(document.getElementById('nome').value || '');
       const body = encodeURIComponent(document.getElementById('detalhe').value || '');
       window.location.href = `mailto:${CONFIG.email}?subject=Contato%20Campanha%20de%20Brinquedos%20-%20${nome}&body=${body}`;
     });
 
-    // Register local donation (demo)
+    // local de doações 
     document.getElementById('btnAdd').addEventListener('click', () => {
       received = Number(localStorage.getItem('received')) || CONFIG.initialReceived;
       received += 1;
@@ -587,7 +625,7 @@
       progressTxt.textContent = `${pct}% da meta alcançada (${received} / ${meta})`;
     }
 
-    // Simple toast (temporário)
+    // Toast
     function toast(msg){
       const t = document.createElement('div');
       t.textContent = msg;
@@ -604,7 +642,7 @@
       setTimeout(()=>t.remove(),3500);
     }
 
-    // FAQ accordion behavior
+    // FAQ estilo acordeom 
     document.querySelectorAll('.faq-item .faq-question').forEach(q => {
       q.addEventListener('click', () => {
         const parent = q.parentElement;
@@ -613,9 +651,9 @@
       q.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') q.click(); });
     });
 
-    // Simple function to adjust iframe bbox (opens OSM with a focused bbox)
+    // Função de ajuste iframe bbox (abertura da OSM com focused bbox)
     function focusOnMap(lat,lon){
-      // use a tiny bbox around the point
+      // uso da bbox com focus
       const delta = 0.005;
       const left = lon - delta;
       const right = lon + delta;
@@ -626,14 +664,14 @@
       document.getElementById('pontos').scrollIntoView({behavior:'smooth'});
     }
 
-    // Small enhancement: keyboard shortcut "w" to open WhatsApp (useful)
+    // Atalho para abrir whatsapp "w"
     document.addEventListener('keydown', (e) => {
       if (e.key.toLowerCase() === 'w' && !/input|textarea/i.test(document.activeElement.tagName)) {
         openWhats('Olá! Quero saber como ajudar na Campanha de Brinquedos.');
       }
     });
 
-    // Try to prefill gallery with placeholders if missing images
+    // teste de arquivos ausentes
     (function fillGallery(){
       const g = document.getElementById('gallery');
       if(!g) return;
